@@ -1,0 +1,61 @@
+link ERD : https://whimsical.com/belajar-bootcamp-UTMi7YRHi5qozfDhNa2Fw
+
+
+langkah-langkah
+1. install laravel 8
+2. install jetstream : composer require laravel/jetstream:2.6
+3. ketik pada terminal :1. php artisan jetstream:install livewire 
+			2. npm install
+			3. npm run dev
+			4. npm watch
+4. buat migration : php artisan make:migration create_namatabel_table
+5. contoh program untuk menambahkan kolom pada table : $table->integer('doctor_id');
+6. jangan lupa semua table di beri program : $table->softDeletes();
+7. setelah membuat migration : php artisan migrate
+8. buat foreign key untuk menyambungkan table berdasarkan id : php artisan make:migration add_foreign_keys_to_namaTable_table
+9. contoh program untuk foreign key function up :  $table->foreign('user_id', 'fk_namaTableForeignKey_to_TableYangDiTuju')->references('id')->on('namaTableYangDiTuju')->onDelete('cascade')->onUpdate('cascade');
+10. contoh program untuk foreign key function down : $table->dropForeign('fk_namaTableForeignKey_to_TableYangDiTuju'); 
+11. setelah itu pada table yang di atur foreign key nya tambahkan program ini : $table->foreignId('user_id')->nullable()->index('fk_detail_user_to_users'); 			 
+12. setelah ditambahkan foreign keynya jalankan migrate pada terminal : php artisan migrate:refresh
+13. bikin model untuk table dengan cara ketik perintah pada terminal : php artisan make:model MasterData/nama table
+14. setelah itu pada masing" model tambahkan code : use Illuminate\Database\Eloquent\SoftDeletes;
+15. dan ganti use HasFactory dengan use SoftDeletes dan tambahkan code : public $table = 'sesuai nama table';
+16. setelah buat data sesuai data pada table databasenya masukan ke $fillable : 
+	protected $dates = [
+        	'created_at',
+         	'updated_at',
+         	'deleted_at',
+     	];
+
+	protected $fillable = [
+         	'name',
+         	'price',
+         	'created_at',
+         	'updated_at',
+         	'deleted_at',
+     	];
+
+17. setelah itu buat koneksinya antar table seperti one to one, one to many, many to many
+	a. one to one
+
+	public function transaction(){
+        //2 parameter (path models, field foreign key)
+        return $this->hasOne('App\Models\Operational\Transaction', 'appointment_id');
+    	}
+
+	public function appointment(){
+        // 3 parameter (path model, field foreign key, field primary key dari table hasmany/hasone)
+        return $this->belongsTo('App\Models\Operational\Appointment', 'appointment_id', 'id');
+    	}
+
+	b. one to many
+
+	public function role_user(){
+        //2 parameter (path models, field foreign key)
+        return $this->hasMany('App\Models\ManagementAccess\RoleUser', 'role_id');
+    	}
+
+	public function role(){
+        // 3 parameter (path model, field foreign key, field primary key dari table hasmany/hasone)
+        return $this->belongsTo('App\Models\ManagementAccess\Role', 'role_id', 'id');
+    	}

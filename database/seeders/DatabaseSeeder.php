@@ -9,10 +9,16 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      *
-     * @return void
      */
+    // * @return void
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            TypeUserSeeder::class,
+            SpecialistSeeder::class,
+            ConsultationSeeder::class,
+            ConfigPaymentSeeder::class,
+
+        ]);
     }
 }

@@ -1,5 +1,7 @@
 link ERD : https://whimsical.com/belajar-bootcamp-UTMi7YRHi5qozfDhNa2Fw
 
+zoho.com
+
 
 langkah-langkah
 1. install laravel 8
@@ -82,3 +84,17 @@ langkah-langkah
         ConfigPayment::insert($config_payment);
 
 22. Setelah selesai semua ketik pada terminal : php artisan migrate:refresh --seed
+23. Membuat Request unutuk validas input suatu data, dengan cara mengetik command ini pada terminal untuk store : php artisan make:request namaFolder/StoreConsultationRequest
+24. dan untuk update : php artisan make:request namaFolder/UpdateConsultationRequest
+25. setelah itu pada file request pada bagian atas tambahkan program ini :
+	use App\Models\MasterData\ConfigPayment; //arahkan sesuai file model request
+	// use Gate
+	use Illuminate\Foundation\Http\FormRequest;
+	use Symfony\Component\HttpFoundation\Response;
+
+26. setelah itu pada bagian public funtion authorize() ganti return menjadi true soalnya nanti akan dijadikan midleware
+27. setelah itu pada bagian public function rules() isi validasinya seperti program berikut :
+	return [
+            'fee' => ['required', 'string', 'max:255'],
+            'vat' => ['required', 'string', 'max:255'],
+        ];

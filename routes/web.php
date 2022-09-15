@@ -20,14 +20,18 @@ use App\Http\Controllers\Frontsite\PaymentController;
 
 Route::resource('/', LandingController::class);
 
-Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['auth::sactum', 'verified']], function(){
+Route::group(['middleware' => ['auth::sactum', 'verified']], function(){
     //payment pages
     Route::resource('payment', PaymentController::class);
     
     
     //appointment pages
     Route::resource('appointment', AppointmentController::class);
-    // return view('dashboard');
+});
+
+Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['auth::sactum', 'verified']], function(){
+    
+    return view('dashboard');
 });
 
 // Route::get('/', function () {

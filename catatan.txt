@@ -105,5 +105,115 @@ langkah-langkah
 	use Illuminate\Validation\Rule;
 
 30. dan di bagian validasinya di tulis seperti ini : Rule::unique('consultation')->ignore($this->consultation),
+31. membuat controller dengan cara mengetik command ini pada terminal : php artisan make:controller Frontsite/PaymentController --resource
+32. setelah itu pada bagian controller tambahkan code di bagian atas seperti ini : 
+	namespace App\Http\Controllers\Frontsite;
 
-php artisan make:controller Frontsite/PaymentController --resource
+	use App\Http\Controllers\Controller;
+
+	use Illuminate\Support\Facades\storage;
+	use symfony\Component\HttpFoundation\Response;
+
+	// use Gate;
+	// use File; //digunakan untuk import sebuah foto
+	use Auth;
+
+	use App\Models\User;
+	use App\Models\Operational\Doctor;
+	use App\Models\MasterData\Specialist;
+
+	// thirdparty package
+
+33. setelah itu jika page nya membutuhkan validasi harus login user terlebih dahulu bisa tambahkan code seperti di bawah ini di bagian extend controller: 
+	/**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+34. setelah itu pada bagian public function index tambahkan code ini : 
+	public function index()
+    {
+        return view('pages.frontsite.landing-page.index'); //view di sini di ambil dari file pada folder yang di arahkan
+    }
+
+35. jika ingin memunculkan error bisa tambahkan return seperti di bawah ini : 
+	return abort(404);
+
+36. setelah itu pada bagian route web untuk menampilkan index pada web bisa menggunakan code seperti di bawah ini :
+	Route::resource('/', LandingController::class);
+
+37. setelah itu kita harus membuat group untuk bagian middlewarenya agar tidak membuat setting middleware per route :
+	//untuk frontsite 
+	Route::group(['middleware' => ['auth::sactum', 'verified']], function(){
+    //payment pages
+    Route::resource('payment', PaymentController::class);
+    
+    
+    //appointment pages
+    Route::resource('appointment', AppointmentController::class);
+	});
+
+	//untuk backsite
+	Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['auth::sactum', 'verified']], function(){
+		
+		return view('dashboard');
+	});
+
+38. setelah itu kita masukkan asset website yang sudah ada pada folder public->assets->frontsite
+39. setelah itu kita membuat template view dengan cara membagi-bagi layout website dengan cara membuat file masing per layout agar website menjadi lancar, pertama kita akan membuat untuk bagian cssnya yang kita simpan pada folder view terus includes setelah itu frontsite. terus pada file css kita menuliskan code css yang sudah di sediakan oleh website yang sudah jadi :
+	<link rel="preconnect" href="{{ url('https://fonts.googleapis.com') }}" />
+    <link rel="preconnect" href="{{ url('https://fonts.gstatic.com') }}" crossorigin />
+    <link
+      href="{{ url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap rel="stylesheet"') }}"/>
+	<link rel="stylesheet" href="{{ asset('/assets/frontsite/style.css') }}" />
+
+40. Untuk bagian meta :
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+41. untuk bagian script :
+	<script
+      defer
+      src="{{ url('https://unpkg.com/alpinejs@3.8.0/dist/cdn.min.js') }}">
+	</script>
+
+42. Dan pada folder component kita tambahkan file header dan footer di dalamnya kita tambahkan code header dan footer yang sudah di sediakan.
+43. setelah itu pada folder layout kita tambahkan file default untuk default layout pada website yang kita buat dan isinya kita tulis codenya seperti code di bawah ini :
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		@include('includes.frontsite.meta')
+		
+		<title>@yield('title') | MeetDoctor</title>
+
+		@stack('before-style')
+		@include('includes.frontsite.style')
+		@stack('after-style')
+	</head>
+	<body>
+		@include('components.frontsite.header')
+			@yield('content')
+
+			
+		@include('components.frontsite.footer')
+			
+		@stack('before-script')
+		@include('includes.frontsite.script')
+		@stack('after-script')
+	</body>
+	</html>
+
+44. setelah itu pada folder pages terus folder frontsite ke landing-page kita tambahkan file index.blade.php dan isi file tersebut dengan content landing page : 
+	@extends('layouts.default')
+
+	@section('title', 'Home')
+
+	@section('content')
+		HOme
+	@endSection

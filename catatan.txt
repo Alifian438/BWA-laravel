@@ -105,3 +105,5 @@ langkah-langkah
 	use Illuminate\Validation\Rule;
 
 30. dan di bagian validasinya di tulis seperti ini : Rule::unique('consultation')->ignore($this->consultation),
+
+php artisan make:controller Frontsite/PaymentController --resource

@@ -1,4 +1,5 @@
 link ERD : https://whimsical.com/belajar-bootcamp-UTMi7YRHi5qozfDhNa2Fw
+link asset : https://sheer-health-52d.notion.site/TO-DO-Notes-for-ALL-a5aa0a07a54748af85b7da5c045b7072
 
 zoho.com
 
@@ -98,3 +99,9 @@ langkah-langkah
             'fee' => ['required', 'string', 'max:255'],
             'vat' => ['required', 'string', 'max:255'],
         ];
+28. jika validasinya ada yang unique tambahkan code program ini untuk bagian store : 'unique:consultation'
+29. dan pada bagian update tambahkan program ini pada bagian atas :
+	//rule ini hanya untuk update request
+	use Illuminate\Validation\Rule;
+
+30. dan di bagian validasinya di tulis seperti ini : Rule::unique('consultation')->ignore($this->consultation),

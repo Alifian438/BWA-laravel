@@ -3,6 +3,8 @@ link asset : https://sheer-health-52d.notion.site/TO-DO-Notes-for-ALL-a5aa0a07a5
 
 zoho.com
 
+cari gambar default : pixelhunter
+
 
 langkah-langkah
 1. install laravel 8
@@ -149,7 +151,7 @@ langkah-langkah
 
 37. setelah itu kita harus membuat group untuk bagian middlewarenya agar tidak membuat setting middleware per route :
 	//untuk frontsite 
-	Route::group(['middleware' => ['auth::sactum', 'verified']], function(){
+	Route::group(['middleware' => ['auth::sanctum', 'verified']], function(){
     //payment pages
     Route::resource('payment', PaymentController::class);
     
@@ -217,3 +219,11 @@ langkah-langkah
 	@section('content')
 		HOme
 	@endSection
+
+45. menambahkan $table->softDeletes(); pada migration users 
+46. membuat logika pada header ketika halaman yang yang di buka sama dengan menu pada navbar maka menu tersebut hover codenya seperti di bawah ini : 
+	{{ request()->is('/') ? "after:absolute after:content-[''] after:border-b-2 after:border-[#0D63F5] after:w-8/12 after:-translate-x-1/2 after:bottom-3 after:left-1/2 font-semibold inline-flex items-center px-1 text-lg" : "hover:text-gray-500 inline-flex items-center px-1 pt-1 text-lg font-medium" }}"
+
+47. melakukan pemindahan dan edit halaman data dari frontend di masukkan satu satu ke file yang sudah kita buat kemarin.
+48. cara memanggil asset yang kita butuhkan di halaman dengan cara : {{ asset('/assets/frontsite/images/doctor-1.png') }}
+49. cara routing pada halaman : {{ route('register') }}

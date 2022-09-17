@@ -227,3 +227,66 @@ langkah-langkah
 47. melakukan pemindahan dan edit halaman data dari frontend di masukkan satu satu ke file yang sudah kita buat kemarin.
 48. cara memanggil asset yang kita butuhkan di halaman dengan cara : {{ asset('/assets/frontsite/images/doctor-1.png') }}
 49. cara routing pada halaman : {{ route('register') }}
+50. slicing halaman login dan register langkah pertama copy atau duplicate terlebih dahulu login dan register blade.php nya setelah itu hapus isi login dan register .blade.phpnya dan diganti dengan template yang sudah di buat.
+51. Setelah itu kita buat dulu file templatenya untuk halaman login dan registernya : 
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		@include('includes.frontsite.meta')
+		
+		<title>@yield('title') | MeetDoctor</title>
+
+		@stack('before-style')
+		@include('includes.frontsite.style')
+		@stack('after-style')
+	</head>
+	<body>
+		
+			@yield('content')
+
+		@stack('before-script')
+		@include('includes.frontsite.script')
+		@stack('after-script')
+	</body>
+	</html>
+
+52. pada saat slicing halaman login.blade.php kita akan menambahkan program pada bagian form programnya sama kan dengan file login yang kita copy tadi setela itu jangan lupa tambahkan @csrf pada bagian bawah form.
+53. setelah itu pada menu input tambahkan : for="email" type="email" id="email" name="email" dan di bagian bawahnya tambahkan value: value="{{ old('email') }}" required autofocus dan khusus untuk password tidak usah di tambahkan value
+54. dan di bawah bagian input tambahkan menu error : 
+	@if ($errors->has('email'))
+        <p class="text-red-500 mb-3 text-sm">{{ $errors->first('email') }}</p>
+    @endif
+
+55. san pada menu sign in ganti a dengan button dan hapus hrefnya.
+56. dan untuk bagian register hampir sama.
+57. setelah itu kita membuat controller untuk dashboard agar halaman dashboard bisa diakses : php artisan make:controller DashboardController --resource
+58. dan di bagian DashboardController tambahkan public function __construct() : 
+	/**
+		* Instantiate a new controller instance.
+		*
+		* @return void
+		*/
+		public function __construct()
+		{
+			$this->middleware('auth');
+		}
+
+59. di bagian index return : return view('pages.backsite.dashboard.index');
+60. setelah itu di bagian route web tambahkan code seperti di bawah ini di bagian atas :
+//backsite
+use App\Http\Controllers\Backsite\DashboardController;
+
+61. dan tambahkan code ini di bagian Route::group :
+	Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['auth:sanctum', 'verified']], function(){
+    
+		//dashboard
+		Route::resource('dashboard', DashboardController::class);
+	});
+
+62. dan kalau ingin menambahkan fitur tambahkan di bagian register bisa di tambahkan terlebih dahulu di bagian app->Actions->Fortify->CreateNewUser
+63. setelah itu atur dulu di bagian app->Providers->RouteServiceProvider atur di bagian HOME tambahkan /backsite sperti contohnya :
+	public const HOME = '/backsite/dashboard';
+
+agar ketika kita melakukan login dan register setelah itu kita submit maka akan di arahkan pada halaman dashboard.
+
+64. setelah itu kita slicing di bagian header untuk mevalidasi siapa yang sudah login apa belum dengan menggunakan @guest dan @auth

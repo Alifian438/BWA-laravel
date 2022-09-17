@@ -306,3 +306,6 @@ agar ketika kita melakukan login dan register setelah itu kita submit maka akan 
                 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display-none">@csrf</form>
     </a
+
+67. menambahkan asset untuk backsite di public->assets->backsite semua assetnya di dapatkan dari template cms
+68. menambahkan meta, script, dan style untuk backsite pada bagian view->includes->backsite semua codenya di dapatkan dari template cms

@@ -309,3 +309,4 @@ agar ketika kita melakukan login dan register setelah itu kita submit maka akan 
 
 67. menambahkan asset untuk backsite di public->assets->backsite semua assetnya di dapatkan dari template cms
 68. menambahkan meta, script, dan style untuk backsite pada bagian view->includes->backsite semua codenya di dapatkan dari template cms
+69. slicing layouts app.blade.php dan halaman dashboard dan bagian component backsite footer header dan menu, serta merubah header pada frontsite pada bagian menu auth setting menjadi dashboard

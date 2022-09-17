@@ -326,9 +326,9 @@
                   >Your Profile</a
                 >
                 <a
-                  href="#"
+                  href="{{ route('backsite.dashboard.index') }}"
                   class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-[#1E2B4F] hover:bg-gray-100"
-                  >Settings</a
+                  >Dashboard</a
                 >
                 <a
                 href="{{ route('logout') }}"

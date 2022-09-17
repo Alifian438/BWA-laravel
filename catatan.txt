@@ -290,3 +290,19 @@ use App\Http\Controllers\Backsite\DashboardController;
 agar ketika kita melakukan login dan register setelah itu kita submit maka akan di arahkan pada halaman dashboard.
 
 64. setelah itu kita slicing di bagian header untuk mevalidasi siapa yang sudah login apa belum dengan menggunakan @guest dan @auth
+
+65. cara menampilkan nama user yang sudah login :
+	{{ Auth::user()->name }}
+
+66. cara membuat fitur logout :
+	<a
+                href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                class="block px-4 py-2 text-sm text-[#1E2B4F] hover:bg-gray-100"
+                role="menuitem"
+                tabindex="-1"
+                id="user-menu-item-2"
+                >Sign out
+                
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display-none">@csrf</form>
+    </a

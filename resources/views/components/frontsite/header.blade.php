@@ -284,19 +284,67 @@
               >Pricing</a
             >
           </div>
-  
+
+          @guest
           <!-- Profile (Mobile no authenticated) -->
-          <div
-            class="py-3 border-gray-200"
-          >
-           <a
-                href="{{ route('login')}}"
-                class="flex items-center justify-center text-center mx-4 rounded-full text-[#1E2B4F] text-lg font-medium bg-[#F2F6FE] px-10 py-3"
-            >
+          <div class="py-3 border-gray-200">
+            <a
+                  href="{{ route('login') }}"
+                  class="flex items-center justify-center text-center mx-4 rounded-full text-[#1E2B4F] text-lg font-medium bg-[#F2F6FE] px-10 py-3"
+              >
               Sign In
             </a>
           </div>
+          @endguest
   
-        </div>
-      </nav>
+          @auth
+            <!-- Profile (Mobile Authenticated) -->
+        <div
+        x-data="{ profileMobilenOpen: false }"
+        class="pt-4 pb-3 border-t border-gray-200"
+          >
+              <div
+                @click="profileMobilenOpen = ! profileMobilenOpen"
+                class="flex items-center px-4 cursor-pointer"
+              >
+                <div class="flex-shrink-0">
+                  <img
+                    class="h-10 w-10 rounded-full ring-1 ring-offset-4 ring-[#0D63F3]"
+                    src="{{ asset('/assets/frontsite/images/authenticated-user.svg') }}"
+                    alt=""
+                  />
+                </div>
+                <div class="ml-3">
+                  <div class="text-base font-medium text-[#1E2B4F]">Hi, {{ Auth::user()->name }}</div>
+                  <div class="text-sm text-[#AFAEC3]">Pasien</div>
+                </div>
+              </div>
+              <div x-show="profileMobilenOpen" class="mt-3 space-y-1">
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-[#1E2B4F] hover:bg-gray-100"
+                  >Your Profile</a
+                >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-[#1E2B4F] hover:bg-gray-100"
+                  >Settings</a
+                >
+                <a
+                href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                class="block px-4 py-2 text-sm text-[#1E2B4F] hover:bg-gray-100"
+                role="menuitem"
+                tabindex="-1"
+                id="user-menu-item-2"
+                >Sign out
+                
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display-none">@csrf</form>
+                </a>
+                
+              </div>
+            </div>
+          @endauth
+    </div>
+  </nav>
       <!-- End Header -->

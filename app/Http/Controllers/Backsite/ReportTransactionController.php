@@ -3,7 +3,20 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+//use library here
+use Illuminate\Support\Facedes\Storage;
+use Symfony\Component\HttpFoundation\Response;
+
+//use everything here
+// use gate
+use Auth;
+
+//use model here (masukkan model yang di butuhkan pada controller)
+use App\Models\Operational\Transaction;
+use App\Models\Operational\Appointment;
+
+//thidparty package
 
 class ReportTransactionController extends Controller
 {
@@ -24,7 +37,13 @@ class ReportTransactionController extends Controller
      */
     public function index()
     {
-        return view('pages.backsite.operational.transaction.index');
+        //for table
+        $transaction = Transaction::orderBy('created_at', 'desc')->get();
+
+        //for select2
+        $appointment = Appointment::orderBy('name', 'asc')->get(); //kenapa asc karena agar nama urut sesuai abjact
+
+        return view('pages.backsite.operational.transaction.index', compact('transaction', 'appointment'));
     }
 
     /**
@@ -34,7 +53,7 @@ class ReportTransactionController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -45,7 +64,7 @@ class ReportTransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -54,9 +73,9 @@ class ReportTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Transaction $transaction)
     {
-        //
+        return view('pages.backsite.operational.transaction.show', compact('transaction'));
     }
 
     /**
@@ -67,7 +86,7 @@ class ReportTransactionController extends Controller
      */
     public function edit($id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -79,7 +98,7 @@ class ReportTransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -90,6 +109,6 @@ class ReportTransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return abort(404);
     }
 }

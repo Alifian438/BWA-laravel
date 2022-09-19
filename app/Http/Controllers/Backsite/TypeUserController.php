@@ -3,7 +3,19 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+//use library here
+use Illuminate\Support\Facedes\Storage;
+use Symfony\Component\HttpFoundation\Response;
+
+//use everything here
+// use gate
+use Auth;
+
+//use model here (masukkan model yang di butuhkan pada controller)
+use App\Models\MasterData\TypeUser;
+
+//thidparty package
 
 class TypeUserController extends Controller
 {
@@ -24,7 +36,9 @@ class TypeUserController extends Controller
      */
     public function index()
     {
-        return view('pages.backsite.management-access.type.index');
+        $type_user = TypeUser::all();
+
+        return view('pages.backsite.management-access.type.index', compact('type_user'));
     }
 
     /**
@@ -34,7 +48,7 @@ class TypeUserController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -45,7 +59,7 @@ class TypeUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -56,7 +70,7 @@ class TypeUserController extends Controller
      */
     public function show($id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -67,7 +81,7 @@ class TypeUserController extends Controller
      */
     public function edit($id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -79,7 +93,7 @@ class TypeUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -90,6 +104,6 @@ class TypeUserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return abort(404);
     }
 }

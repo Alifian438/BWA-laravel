@@ -10,6 +10,8 @@
     @stack('after-style')
 </head>
 <body>
+
+    
     @include('components.frontsite.header')
         @yield('content')
 

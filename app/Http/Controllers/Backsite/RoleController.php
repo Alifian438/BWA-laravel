@@ -18,6 +18,7 @@ use Auth;
 
 //use model here (masukkan model yang di butuhkan pada controller)
 use App\Models\ManagementAccess\Role;
+use App\Models\ManagementAccess\Permission;
 
 //thidparty package
 
@@ -81,6 +82,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
+        $role->load('permission');
         return view('pages.backsite.management-access.role.show', compact('role'));
     }
 
@@ -92,7 +94,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('pages.backsite.management-access.role.edit', compact('role'));
+        $permission = Permission::all();
+        $role->load('permission');
+        return view('pages.backsite.management-access.role.edit', compact('permission','role'));
     }
 
     /**
@@ -108,6 +112,8 @@ class RoleController extends Controller
 
         $role->update($data);
 
+        $role->permission()->sync($request->input('permission', []));
+
         alert()->success('Success Message', 'Successfully added new role');
         return redirect()->route('backsite.role.index');
     }
@@ -120,7 +126,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete(); //untuk soft delete
+        $role->forcedelete(); 
         // $specialist->forceDelete(); //untuk hard delete
 
         alert()->success('Success Message', 'Successfully deleted role');

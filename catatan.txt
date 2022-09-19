@@ -430,3 +430,105 @@ agar ketika kita melakukan login dan register setelah itu kita submit maka akan 
 
 83. setelah itu tambahkan code seperti ini pada bagian layout agar sweet alert berfungsi :
 	@include('sweetalert::alert')
+
+84. menambahkan program untuk HospitalPatientController pada bagian atas : 
+	use App\Http\Controllers\Controller;
+
+	// use library here
+	use Illuminate\Support\Facades\Storage;
+	use Illuminate\Support\Facades\DB;
+	use Symfony\Component\HttpFoundation\Response;
+
+	// use everything here
+	use Gate;
+	use Auth;
+
+	// use model here
+	use App\Models\User;
+	use App\Models\Operational\Appointment;
+	use App\Models\Operational\Transaction;
+	use App\Models\Operational\Doctor;
+	use App\Models\MasterData\Specialist;
+	use App\Models\MasterData\Consultation;
+	use App\Models\MasterData\ConfigPayment;
+
+85. menambahkan program untuk HospitalPatientController pada bagian index:
+	abort_if(Gate::denies('hospital_patient_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $hospital_patient = User::whereHas('detail_user', function ($query) {
+                                    return $query->where('type_user_id', 3);
+                                })->orderBy('created_at', 'desc')->get();
+
+        return view('pages.backsite.operational.hospital-patient.index', compact('hospital_patient'));
+
+86. install middleware dengan cara ketik pada terminal : php artisan make:middleware AuthGates
+87. pada function handle tambahkan code ini : 
+	//get all user by session browser
+        $user = \Auth::user();
+
+        //checking validation middleware (validasi apakah aplikasi kita jalan apa tidak)
+        if (!app()->runningConsole() && $user) {
+            $roles = Role::with('permission')->get();
+            $permissionsArray = [];
+
+            foreach ($roles as $role) {
+                foreach ($role->$permission as $permissions){
+                    $permissionsArray[$permissions->tittle] []= $role->id;
+                }
+            }
+
+            //check user role
+            foreach ($permissionsArray as $title => $roles){
+                Gate::define($title, function(\App\Models\User $user)
+                use ($roles) {
+                    return count(array_intersect($user->role->pluck('id')
+                    ->toArray(), $roles)) > 0;
+                });
+
+            }
+
+        }
+
+88. setelah itu pada controller doctor aktifkan use gate;
+89. tambahkan program ini pada bagian show :
+	abort_if(Gate::denies('doctor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+90. tambahkan program ini pada bagian edit :
+	abort_if(Gate::denies('doctor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+91. tambahkan program ini pada bagian delete :
+	abort_if(Gate::denies('doctor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+92. setelah itu pada bagian kernel tambahkan program ini pada bagian $middleware :
+	\App\Http\Middleware\AuthGates::class,
+93. dan pada bagian request update untuk doctor tambahkan program ini dan jangan lupa use Gatte; :
+	abort_if(Gate::denies('doctor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return true;
+
+93. dan pada bagian request store untuk doctor tambahkan program ini dan jangan lupa use Gatte; :
+	abort_if(Gate::denies('doctor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return true;
+
+94. setelah itu tambahkan pada bagian models untuk permission :
+	//many to many
+    public function role()
+    {
+        return $this->belongsToMany('App\Models\ManagementAccess\Role');
+    }
+
+95. setelah itu tambahkan pada bagian models untuk role :
+	 //many to many
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function permission()
+    {
+        return $this->belongsToMany('App\Models\ManagementAccess\Permission');
+    }
+
+96. setelah itu tambahkan pada bagian models untuk user :
+	 //many to many
+   ublic function role()
+    {
+        return $this->belongsToMany('App\Models\ManagementAccess\Role');
+    }
+

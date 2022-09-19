@@ -61,6 +61,12 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function role()
+    {
+        return $this->belongsToMany('App\Models\ManagementAccess\Role');
+    }
+
+
     public function appointment(){
         //2 parameter (path models, field foreign key)
         return $this->hasMany('App\Models\Operational\Appointment', 'user_id');

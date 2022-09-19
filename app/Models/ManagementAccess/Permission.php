@@ -26,6 +26,12 @@ class Permission extends Model
         'deleted_at',
     ];
 
+    //many to many
+    public function role()
+    {
+        return $this->belongsToMany('App\Models\ManagementAccess\Role');
+    }
+
     public function permission_role(){
         //2 parameter (path models, field foreign key)
         return $this->hasMany('App\Models\ManagementAccess\PermissionRole', 'permission_id');

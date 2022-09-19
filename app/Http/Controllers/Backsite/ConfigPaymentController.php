@@ -102,7 +102,7 @@ class ConfigPaymentController extends Controller
 
         $config_payment->update($data);
 
-        alert()->success('Success Message', 'Successfully added new config payment');
+        alert()->success('Success Message', 'Successfully update config payment');
         return redirect()->route('backsite.config_payment.index');
     }
     /**

@@ -11,7 +11,7 @@ class Permission extends Model
     // use HasFactory;
     use SoftDeletes;
 
-    public $table = 'permissions';
+    public $table = 'permission';
 
     protected $dates = [
         'created_at',

@@ -26,6 +26,7 @@ class DetailUser extends Model
         'address',
         'photo',
         'gender',
+        'age',
         'created_at',
         'updated_at',
         'deleted_at',

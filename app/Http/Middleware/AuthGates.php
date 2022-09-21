@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\ManagementAccess\Role;
 use Illuminate\Support\Facades\Gate;
 
+
 class AuthGates
 {
     /**
@@ -23,7 +24,7 @@ class AuthGates
         $user = \Auth::user();
 
         //checking validation middleware (validasi apakah aplikasi kita jalan apa tidak)
-        if (!app()->runningConsole() && $user) {
+        if (!app()->runningInConsole() && $user) {
             $roles = Role::with('permission')->get();
             $permissionsArray = [];
 

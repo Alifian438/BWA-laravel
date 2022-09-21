@@ -14,6 +14,10 @@ use Auth;
 
 //use model here (masukkan model yang di butuhkan pada controller)
 use App\Models\ManagementAccess\Permission;
+use App\Models\ManagementAccess\PermissionRole;
+use App\Models\ManagementAccess\Role;
+use App\Models\ManagementAccess\RoleUser;
+
 
 //thidparty package
 class PermissionController extends Controller

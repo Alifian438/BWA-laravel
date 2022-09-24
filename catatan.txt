@@ -1,6 +1,8 @@
 link ERD : https://whimsical.com/belajar-bootcamp-UTMi7YRHi5qozfDhNa2Fw
 link asset : https://sheer-health-52d.notion.site/TO-DO-Notes-for-ALL-a5aa0a07a54748af85b7da5c045b7072
 
+uuid
+
 zoho.com
 
 cari gambar default : pixelhunter

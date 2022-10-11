@@ -50,7 +50,7 @@
             </svg>
 
             <svg
-              width="20"
+              width="20" 
               height="19"
               viewBox="0 0 20 19"
               fill="none"
